@@ -5,7 +5,7 @@
 import RedisOperate
 import time,pickle
 import threading
-from Client import Plugin_API
+import Plugin_API
 # Plugin.
 str = getattr(Plugin_API, 'Get_Cpu_status')
 client_ip='114.112.153.121'
