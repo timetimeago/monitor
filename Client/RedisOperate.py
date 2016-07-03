@@ -23,6 +23,8 @@ class Redis_Instance:
 
 if __name__ == '__main__':
     ww = Redis_Instance()
-    ww.Set('asd','asdasd')
-    print ww.Get('asd')
+#     ww.Set('asd','asdasd')
+#     print ww.Get('asd')
+    qq = '114.112.153.121'
+    print ww.Get('Client_Config::%s'%(qq))
             
