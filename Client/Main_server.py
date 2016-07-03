@@ -8,7 +8,7 @@ import threading
 import Plugin_API
 # Plugin.
 str = getattr(Plugin_API, 'Get_Cpu_status')
-client_ip='114.112.153.121'
+client_ip=''
 class Client(object):
     def __init__(self):
         self.r1 = RedisOperate.Redis_Instance()
@@ -31,6 +31,7 @@ class Client(object):
         func = getattr(Plugin_API,plugin_name)
         result = {'Monitor:%s:%s'%(service_name,client_ip):func()}
         self.r1.Publish(pickle.dumps(result))
+        print result
 if __name__ == '__main__':
     r3 = Client()
 #     print r3.Get_conf_from_Redis()
