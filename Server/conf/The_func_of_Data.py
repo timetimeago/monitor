@@ -3,7 +3,7 @@
 @author: Tiehua
 '''
 def avg():
-    pass
+    print 'asd'
 def most():
     pass
 def hit():

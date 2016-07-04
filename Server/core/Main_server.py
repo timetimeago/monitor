@@ -6,50 +6,30 @@ import RedisOperate,serialize,pickle,threading,time,Data_Deal_API
 class Server(object):
     def __init__(self):
         self.r1 = RedisOperate.Redis_Instance()
+
     
-    def Listen_Data(self):
-        return self.r1.Listen()
-    
-    def Deal_with_Pickle(self,msg):
-        data = {}
+    def Deal_with_Pickle(self):
         if not serialize.Flush_IP_conf_to_redis():
             print 'Flush Config to redis Failed'
-            break
+            exit(1)
         if self.r1.Listen():
             print 'Begin to Monitor'
-            Time = 0
+            self.Time = time.time()
         while True:    
             msg = self.r1.Listen()
             Time1 = time.time()
-            Flag = Time1 - Time
-    def task(self,msg,Time1,Flag):
+            t = threading.Thread(target=self.task,args=(msg,Time1,))
+            t.start()
+    def task(self,msg,Time1):
+        data = {}
         data = pickle.loads(msg[2])
+       # print data
         for key,value in data.items():
             Paramter = key.split(':')
-            Service_name = Paramter[1].replace(' ','_')
+            Service_name = Paramter[1]
             Client_Ip = Paramter[2]
             func = getattr(Data_Deal_API, Service_name)
-            func(Client_Ip,value,Time1,Flag)
-        
+            self.Time = func(Client_Ip,value,Time1,self.Time)
 if __name__ == '__main__':
-    if not serialize.Flush_IP_conf_to_redis():
-        print 'Flush Config to Redis Failed'
-        exit(1)
-    
-    r4 = Server()
-    try:
-        r4.Listen_Data()
-    except Exception:
-        print 'Listen the Redis Failed'
-        exit(1)
-    while True:
-        msg = r4.Listen_Data()
-        if msg:
-            threading.Thread(target=r4.Deal_with_Pickle(msg))
-        
-        
-    
-        
-    
-    
-    
+    S1 = Server()
+    S1.Deal_with_Pickle()

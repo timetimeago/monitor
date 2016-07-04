@@ -2,10 +2,12 @@
 import redis
 class Redis_Instance:
     def __init__(self):
-        self.handle = redis.Redis(host='114.112.153.121')
+        self.handle = redis.Redis(host='127.0.0.1')
         self.publish_channel = 'fm100'
         self.subscribe_channel = 'fm100' 
-    
+        self.handle_l2 = self.handle.pubsub()
+        self.handle_l2.subscribe(self.subscribe_channel)
+   
     def Set(self,key,value):
         self.handle.set(key, value)
         
@@ -16,8 +18,6 @@ class Redis_Instance:
         return self.handle.publish(self.publish_channel,msg)
         
     def Listen(self):
-        self.handle_l2 = self.handle.pubsub()
-        self.handle_l2.subscribe(self.subscribe_channel)
         return self.handle_l2.parse_response()
     
 

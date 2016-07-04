@@ -4,6 +4,7 @@
 '''
 import re,commands
 def Get_memory_status():
+    print 'Get memory running'
     val = commands.getoutput('free')
     Service = {
                'service':{}

@@ -2,7 +2,8 @@
 '''
 @author: Tiehua
 '''
-from Server.conf import Linux_server
+import Global_Path
+from conf import Linux_server
 
 class Base_Template(object):
     def __init__(self):
@@ -16,7 +17,6 @@ class Linux_Monitor_Template(Base_Template):
     def __init__(self):
         super(Linux_Monitor_Template,self).__init__()
         self.name = 'Linux_Monitor_Template'
-        self.Monitor_mod = [
-                            Linux_server.Cpu,
-                            Linux_server.Memory,
-                            ]
+        self.Monitor_mod = {
+                            Linux_server.Memory:30,
+                            }

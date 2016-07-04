@@ -2,7 +2,7 @@
 import redis
 class Redis_Instance:
     def __init__(self):
-        self.handle = redis.Redis(host='114.112.153.121')
+        self.handle = redis.Redis(host='127.0.0.1')
         self.publish_channel = 'fm100'
         self.subscribe_channel = 'fm100' 
     
@@ -25,6 +25,6 @@ if __name__ == '__main__':
     ww = Redis_Instance()
 #     ww.Set('asd','asdasd')
 #     print ww.Get('asd')
-    qq = '114.112.153.121'
+    qq = '127.0.0.1'
     print ww.Get('Client_Config::%s'%(qq))
             
